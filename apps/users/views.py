@@ -44,7 +44,7 @@ class MeListAPIView(ListAPIView):
         if user.is_authenticated:
             queryset = User.objects.filter(
                 username=user.username
-            )  # Change 'phone' to 'username'
+            )
             return queryset
         else:
             return User.objects.none()
