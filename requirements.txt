@@ -6,4 +6,5 @@ flake8==7.1.1
 isort==5.13.2
 pip-chill==1.0.3
 psycopg2-binary==2.9.9
+pytest-django==4.9.0
 python-dotenv==1.0.1
