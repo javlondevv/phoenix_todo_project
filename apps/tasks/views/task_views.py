@@ -1,14 +1,17 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from apps.tasks.models import Task
+from apps.tasks.pagination import CustomPagination
 from apps.tasks.serializers.tasks_serializers import TaskSerializer
 
 
 class TaskListCreateView(ListCreateAPIView):
     serializer_class = TaskSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated,]
+    pagination_class = CustomPagination
 
     @extend_schema(tags=["Tasks"])
     def get(self, request, *args, **kwargs):
@@ -28,7 +31,7 @@ class TaskListCreateView(ListCreateAPIView):
 # Retrieve, Update, and Delete Task
 class TaskDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated,]
 
     @extend_schema(tags=["Tasks"])
     def get(self, request, *args, **kwargs):
