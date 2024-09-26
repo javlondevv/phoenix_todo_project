@@ -2,8 +2,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework import permissions
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.parsers import FormParser, MultiPartParser
-from rest_framework.permissions import (AllowAny, IsAuthenticated,
-                                        IsAuthenticatedOrReadOnly)
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework_simplejwt.views import \
     TokenObtainPairView as BaseTokenObtainPairView
@@ -42,9 +41,7 @@ class MeListAPIView(ListAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
-            queryset = User.objects.filter(
-                username=user.username
-            )
+            queryset = User.objects.filter(username=user.username)
             return queryset
         else:
             return User.objects.none()
@@ -63,8 +60,6 @@ class MeListAPIView(ListAPIView):
 
 class UserCreateAPIView(CreateAPIView):
     serializer_class = RegisterModelSerializer
-    # parser_classes = (FormParser, MultiPartParser)
-    # permission_classes = (IsAuthenticated,)
     renderer_classes = [JSONRenderer]
 
     @extend_schema(tags=["User"])
